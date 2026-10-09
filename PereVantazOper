@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+class Fraction {
+private:
+    int numerator;
+    int denominator;
+
+public:
+    Fraction(int n = 0, int d = 1) {
+        numerator = n;
+        denominator = d;
+    }
+
+    void show() {
+        cout << numerator << "/" << denominator;
+    }
+
+    Fraction operator*(const Fraction& f) {
+        return Fraction(numerator * f.numerator,
+                        denominator * f.denominator);
+    }
+
+    Fraction operator/(const Fraction& f) {
+        return Fraction(numerator * f.denominator,
+                        denominator * f.numerator);
+    }
+
+    Fraction operator*(int n) {
+        return Fraction(numerator * n, denominator);
+    }
+
+    Fraction operator/(int n) {
+        return Fraction(numerator, denominator * n);
+    }
+
+    friend Fraction operator*(int n, const Fraction& f) {
+        return Fraction(n * f.numerator, f.denominator);
+    }
+
+    friend Fraction operator/(int n, const Fraction& f) {
+        return Fraction(n * f.denominator, f.numerator);
+    }
+};
+
+int main() {
+    Fraction a(2, 3);
+    Fraction b(3, 4);
+
+    (a * b).show();
+    cout << endl;
+
+    (2 * a).show();
+    cout << endl;
+
+    (a * 3).show();
+    cout << endl;
+
+    (a / b).show();
+    cout << endl;
+
+    (2 / a).show();
+    cout << endl;
+
+    (a / 2).show();
+    cout << endl;
+
+    return 0;
+}
