@@ -1,0 +1,32 @@
+#pragma once
+#include "Reservoir.h"
+
+class ReservoirArray {
+private:
+    Reservoir* data;
+    int capacity;
+    int size;
+
+    void Resize(int newCapacity);
+
+public:
+    ReservoirArray();
+    explicit ReservoirArray(int initialCapacity);
+    ReservoirArray(const ReservoirArray& other);
+    ReservoirArray& operator=(const ReservoirArray& other);
+    ~ReservoirArray();
+
+    void Add(const Reservoir& reservoir);
+    bool Remove(int index);
+
+    int GetSize() const { return size; }
+
+    const Reservoir& Get(int index) const { return data[index]; }
+
+    Reservoir& Get(int index) { return data[index]; }
+
+    void PrintAll() const;
+
+    bool SaveToTextFile(const char* filename) const;
+    bool SaveToBinaryFile(const char* filename) const;
+};
