@@ -1,0 +1,106 @@
+#include "ReservoirArray.h"
+#include <iostream>
+#include <fstream>
+
+void ReservoirArray::Resize(int newCapacity) {
+    Reservoir* newData = new Reservoir[newCapacity];
+    for (int i = 0; i < size; ++i) {
+        newData[i] = data[i];
+    }
+    if (data != nullptr) {
+        delete[] data;
+    }
+    data = newData;
+    capacity = newCapacity;
+}
+
+ReservoirArray::ReservoirArray() : data(nullptr), capacity(0), size(0) {
+    Resize(2);
+}
+
+ReservoirArray::ReservoirArray(int initialCapacity) : data(nullptr), capacity(0), size(0) {
+    Resize(initialCapacity > 0 ? initialCapacity : 2);
+}
+
+ReservoirArray::ReservoirArray(const ReservoirArray& other) : data(nullptr), capacity(0), size(0) {
+    Resize(other.capacity);
+    size = other.size;
+    for (int i = 0; i < size; ++i) {
+        data[i] = other.data[i];
+    }
+}
+
+ReservoirArray& ReservoirArray::operator=(const ReservoirArray& other) {
+    if (this != &other) {
+        if (data != nullptr) {
+            delete[] data;
+        }
+        capacity = other.capacity;
+        size = other.size;
+        data = new Reservoir[capacity];
+        for (int i = 0; i < size; ++i) {
+            data[i] = other.data[i];
+        }
+    }
+    return *this;
+}
+
+ReservoirArray::~ReservoirArray() {
+    if (data != nullptr) {
+        delete[] data;
+    }
+}
+
+void ReservoirArray::Add(const Reservoir& reservoir) {
+    if (size >= capacity) {
+        Resize(capacity == 0 ? 2 : capacity * 2);
+    }
+    data[size++] = reservoir;
+}
+
+bool ReservoirArray::Remove(int index) {
+    if (index < 0 || index >= size) {
+        return false;
+    }
+    for (int i = index; i < size - 1; ++i) {
+        data[i] = data[i + 1];
+    }
+    --size;
+    return true;
+}
+
+void ReservoirArray::PrintAll() const {
+    if (size == 0) {
+        std::cout << "The empty water array\n";
+        return;
+    }
+    std::cout << "\n=== List of all reservoirs (" << size << ") ===\n";
+    for (int i = 0; i < size; ++i) {
+        std::cout << "Index [" << i << "]:\n";
+        data[i].PrintInfo();
+    }
+}
+
+bool ReservoirArray::SaveToTextFile(const char* filename) const {
+    std::ofstream outFile(filename);
+    if (!outFile.is_open()) return false;
+
+    outFile << size << "\n";
+    for (int i = 0; i < size; ++i) {
+        data[i].WriteToTextStream(outFile);
+    }
+    outFile.close();
+    return true;
+}
+
+bool ReservoirArray::SaveToBinaryFile(const char* filename) const {
+    std::ofstream outFile(filename, std::ios::binary);
+    if (!outFile.is_open()) return false;
+
+    outFile.write(reinterpret_cast<const char*>(&size), sizeof(size));
+    for (int i = 0; i < size; ++i) {
+        data[i].WriteToBinaryStream(outFile);
+    }
+    outFile.close();
+    return true;
+}
