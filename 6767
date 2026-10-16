@@ -1,0 +1,100 @@
+//#include <iostream>
+//#include "Book.h"
+//#include "Worker.h"
+//
+//const int SIZE = 5;
+//
+//// task 1
+///*
+//void PrintBooksByAuthor(const Book books[], int size, const char* author) {
+// std::cout << "\n=== Books by Author: " << author << " ===\n";
+// for (int i = 0; i < size; ++i) {
+//  if (strcmp(books[i].GetAuthor(), author) == 0) {
+//   books[i].PrintInfo();
+//  }
+// }
+//}
+//
+//void PrintBooksByPublisher(const Book books[], int size, const char* publisher) {
+// std::cout << "\n=== Books by Publisher: " << publisher << " ===\n";
+// for (int i = 0; i < size; ++i) {
+//  if (strcmp(books[i].GetPublisher(), publisher) == 0) {
+//   books[i].PrintInfo();
+//  }
+// }
+//}
+//
+//void PrintBooksAfterYear(const Book books[], int size, int year) {
+// std::cout << "\n=== Books Published After " << year << " ===\n";
+// for (int i = 0; i < size; ++i) {
+//  if (books[i].GetYear() > year) {
+//   books[i].PrintInfo();
+//  }
+// }
+//}
+//*/
+//
+//// task 2
+//
+//void PrintWorkersByExperience(const Worker workers[], int size, int requiredYears, int currentYear) {
+// std::cout << "\n=== Workers with experience over " << requiredYears << " years ===\n";
+// for (int i = 0; i < size; ++i) {
+//  if (workers[i].GetExperience(currentYear) > requiredYears) {
+//   workers[i].PrintInfo();
+//  }
+// }
+//}
+//
+//void PrintWorkersBySalary(const Worker workers[], int size, double minSalary) {
+// std::cout << "\n=== Workers with salary over $" << minSalary << " ===\n";
+// for (int i = 0; i < size; ++i) {
+//  if (workers[i].GetSalary() > minSalary) {
+//   workers[i].PrintInfo();
+//  }
+// }
+//}
+//
+//void PrintWorkersByPosition(const Worker workers[], int size, const char* position) {
+// std::cout << "\n=== Workers holding position: " << position << " ===\n";
+// for (int i = 0; i < size; ++i) {
+//  if (strcmp(workers[i].GetPosition(), position) == 0) {
+//   workers[i].PrintInfo();
+//  }
+// }
+//}
+//
+//int main() {
+//
+// // task 1
+// /*
+// 
+//
+// Book library[SIZE] = {
+//  Book("CoolNickname", "Surviving School 13", "NightElve Studio", 2009, 240),
+//  Book("Koleks", "How c++ ruin live", "CoolNick Media", 2011, 350),
+//  Book("CoolNickname", "CoolBook", "NightElve Studio", 2015, 180),
+//  Book("Taras ne Shevchenkp", "Ne Kobzar", "Roblox Studio XD", 2007, 120),
+//  Book("Stariy_bog", "Tutorial", "Dota2", 2018, 290)
+// };
+//
+// PrintBooksByAuthor(library, SIZE, "CoolNickname");
+// PrintBooksByPublisher(library, SIZE, "NightElve Studio");
+// PrintBooksAfterYear(library, SIZE, 2011);
+// */
+// // task 2
+// const int CURRENT_YEAR = 2026;
+//
+// Worker team[SIZE] = {
+//  Worker("C++ProKiller", "C++ Developer", 2018, 45000),
+//  Worker("Neych $win", "QA Engineer", 2022, 28000),
+//  Worker("3.14toshok", "C++ Developer", 2015, 60000),
+//  Worker("MegaSalo", "Project Manager", 2020, 35000),
+//  Worker("Ivan normal", "QA Engineer", 2024, 22000)
+// };
+//
+// PrintWorkersByExperience(team, SIZE, 5, CURRENT_YEAR);
+//
+// PrintWorkersBySalary(team, SIZE, 28000);
+//
+// PrintWorkersByPosition(team, SIZE, "C++ Developer");
+//}
