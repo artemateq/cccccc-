@@ -1,0 +1,68 @@
+#include <iostream>
+#include "Player.h"
+
+int main() {
+    std::cout << "Players at start: " << Player::getTotalPlayers() << "\n\n";
+
+    
+    Player p1("Arthur", 80, 5);
+    Player p2;   (Unknown, 100, 1)
+
+   
+    p1.printStats();
+    p2.printStats();
+    std::cout << "Total players: " << Player::getTotalPlayers() << "\n\n";
+
+   
+    p1.takeDamage(30);
+    std::cout << "After takeDamage(30): ";
+    p1.printStats();
+
+    p1.heal(100);  
+    std::cout << "After heal(100) (capped at 100): ";
+    p1.printStats();
+
+    p1.takeDamage(500); 
+    std::cout << "After takeDamage(500) (not below 0): ";
+    p1.printStats();
+
+    p1.levelUp();
+    std::cout << "After levelUp(): ";
+    p1.printStats();
+    std::cout << "\n";
+
+    
+    
+    p2.setName("Merlin the Wise and Powerful"); 
+    p2.setHealth(-50);                           
+    std::cout << "After setName + setHealth(-50): ";
+    p2.printStats();
+    p2.setName("Bob");                           
+    p2.setHealth(75);
+    std::cout << "After setName(\"Bob\") + setHealth(75): ";
+    p2.printStats();
+    std::cout << "Getters: name=" << p2.getName()
+              << ", hp=" << p2.getHealth()
+              << ", level=" << p2.getLevel() << "\n\n";
+
+  
+    std::cout << " Static counter and destructor\n";
+    {
+        Player temp("Temporary", 50, 2);
+        std::cout << "Inside block, total players: "
+                  << Player::getTotalPlayers() << "\n";
+    }  
+    std::cout << "After block, total players: "
+              << Player::getTotalPlayers() << "\n";
+
+   
+    Player* dyn = new Player("Dynamic", 90, 3);
+    std::cout << "After new Player, total players: "
+              << Player::getTotalPlayers() << "\n";
+    dyn->printStats();
+    delete dyn;
+    std::cout << "After delete, total players: "
+              << Player::getTotalPlayers() << "\n";
+
+    return 0;
+}
