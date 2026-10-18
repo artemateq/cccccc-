@@ -1,0 +1,67 @@
+#include "Player.h"
+#include <iostream>
+#include <cstring>
+
+int Player::totalPlayers = 0;
+
+Player::Player(const char* name, int health, int level)
+    : name(nullptr), health(health < 0 ? 0 : health), level(level)
+{
+    if (name == nullptr) {
+        name = "Unknown";
+    }
+    this->name = new char[std::strlen(name) + 1];
+    std::strcpy(this->name, name);
+    ++totalPlayers;
+}
+
+Player::Player() : Player("Unknown", 100, 1) {}
+
+Player::~Player() {
+    delete[] name;
+    --totalPlayers;
+}
+
+const char* Player::getName() const { return name; }
+int Player::getHealth() const { return health; }
+int Player::getLevel() const { return level; }
+
+void Player::setName(const char* newName) {
+    if (newName == nullptr) {
+        return;
+    }
+    char* temp = new char[std::strlen(newName) + 1];
+    std::strcpy(temp, newName);
+    delete[] name;
+    name = temp;
+}
+
+void Player::setHealth(int newHealth) {
+    health = (newHealth < 0) ? 0 : newHealth;
+}
+
+void Player::takeDamage(int damage) {
+    if (damage < 0) return;
+    health -= damage;
+    if (health < 0) health = 0;
+}
+
+void Player::heal(int amount) {
+    if (amount < 0) return;
+    health += amount;
+    if (health > 100) health = 100;
+}
+
+void Player::levelUp() {
+    ++level;
+}
+
+void Player::printStats() const {
+    std::cout << "Player: " << name
+              << " | HP: " << health
+              << " | Level: " << level << std::endl;
+}
+
+int Player::getTotalPlayers() {
+    return totalPlayers;
+}
