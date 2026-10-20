@@ -1,0 +1,105 @@
+#include <iostream>
+using namespace std;
+
+class Time {
+private:
+    int hours, minutes, seconds;
+
+    int toSeconds() const {
+        return hours * 3600 + minutes * 60 + seconds;
+    }
+
+    void fromSeconds(int total) {
+        if (total < 0) total = 0;
+        total %= 86400;
+        hours = total / 3600;
+        minutes = (total % 3600) / 60;
+        seconds = total % 60;
+    }
+
+public:
+    Time(int h = 0, int m = 0, int s = 0) {
+        fromSeconds(h * 3600 + m * 60 + s);
+    }
+
+    bool operator<(const Time& other) const {
+        return toSeconds() < other.toSeconds();
+    }
+
+    bool operator>(const Time& other) const {
+        return toSeconds() > other.toSeconds();
+    }
+
+    bool operator<=(const Time& other) const {
+        return toSeconds() <= other.toSeconds();
+    }
+
+    bool operator>=(const Time& other) const {
+        return toSeconds() >= other.toSeconds();
+    }
+
+    bool operator==(const Time& other) const {
+        return toSeconds() == other.toSeconds();
+    }
+
+    bool operator!=(const Time& other) const {
+        return toSeconds() != other.toSeconds();
+    }
+
+    Time& operator++() {
+        fromSeconds(toSeconds() + 1);
+        return *this;
+    }
+
+    Time operator++(int) {
+        Time old = *this;
+        ++(*this);
+        return old;
+    }
+
+    Time& operator--() {
+        fromSeconds(toSeconds() - 1);
+        return *this;
+    }
+
+    Time operator--(int) {
+        Time old = *this;
+        --(*this);
+        return old;
+    }
+
+    void display() const {
+        if (hours < 10) cout << '0';
+        cout << hours << ':';
+        if (minutes < 10) cout << '0';
+        cout << minutes << ':';
+        if (seconds < 10) cout << '0';
+        cout << seconds << '\n';
+    }
+};
+
+int main() {
+    Time t(12, 30, 0);
+
+    t.display();
+    (++t).display();
+    (t++).display();
+    t.display();
+
+    (--t).display();
+    (t--).display();
+    t.display();
+
+    Time t1(10, 0, 0);
+    Time t2(12, 0, 0);
+
+    cout << (t1 < t2) << '\n';
+    cout << (t1 == t2) << '\n';
+    cout << (t1 > t2) << '\n';
+
+    Time zero(0, 0, 0);
+    --zero;
+    zero.display();
+
+    return 0;
+}
