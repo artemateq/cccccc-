@@ -1,0 +1,91 @@
+#include <iostream>
+#include <cstring>
+#include <stdexcept>
+
+class MyString {
+private:
+    char* data;
+    size_t length;
+
+public:
+    MyString() : data(new char[1]), length(0) {
+        data[0] = '\0';
+    }
+
+    MyString(const char* str) {
+        if (str == nullptr) {
+            length = 0;
+            data = new char[1];
+            data[0] = '\0';
+            return;
+        }
+        length = std::strlen(str);
+        data = new char[length + 1];
+        std::strcpy(data, str);
+    }
+
+    ~MyString() {
+        delete[] data;
+    }
+
+    MyString(const MyString& other) : data(new char[other.length + 1]), length(other.length) {
+        std::strcpy(data, other.data);
+    }
+
+    MyString& operator=(const MyString& other) {
+        if (this == &other) {
+            return *this;
+        }
+        delete[] data;
+        length = other.length;
+        data = new char[length + 1];
+        std::strcpy(data, other.data);
+        return *this;
+    }
+
+    char& operator[](size_t index) {
+        if (index >= length) {
+            throw std::out_of_range("MyString: index out of range");
+        }
+        return data[index];
+    }
+
+    const char& operator[](size_t index) const {
+        if (index >= length) {
+            throw std::out_of_range("MyString: index out of range");
+        }
+        return data[index];
+    }
+
+    size_t size() const { return length; }
+    const char* c_str() const { return data; }
+
+    friend std::ostream& operator<<(std::ostream& os, const MyString& s) {
+        return os << s.data;
+    }
+};
+
+int main() {
+    MyString empty;
+    std::cout << "Порожній: [" << empty << "], довжина " << empty.size() << "\n";
+
+    MyString a("Hello");
+    MyString b(a);
+    b[0] = 'J';
+    std::cout << "a = " << a << ", b = " << b << "\n";
+
+    MyString c;
+    c = a;
+    c = c;
+    std::cout << "c = " << c << "\n";
+
+    const MyString k("const");
+    std::cout << "k[1] = " << k[1] << "\n";
+
+    try {
+        std::cout << a[10];
+    } catch (const std::out_of_range& e) {
+        std::cout << "Помилка: " << e.what() << "\n";
+    }
+    return 0;
+}
