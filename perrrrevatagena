@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+class Time {
+private:
+    int hours, minutes, seconds;
+
+    void normalize() {
+        int total = hours * 3600 + minutes * 60 + seconds;
+
+        if (total < 0) total = 0;
+
+        hours = total / 3600;
+        minutes = (total % 3600) / 60;
+        seconds = total % 60;
+    }
+
+public:
+    Time(int h = 0, int m = 0, int s = 0)
+        : hours(h), minutes(m), seconds(s) {
+        normalize();
+    }
+
+    friend ostream& operator<<(ostream& out, const Time& t) {
+        if (t.hours < 10) out << '0';
+        out << t.hours << ':';
+
+        if (t.minutes < 10) out << '0';
+        out << t.minutes << ':';
+
+        if (t.seconds < 10) out << '0';
+        out << t.seconds;
+
+        return out;
+    }
+
+    friend istream& operator>>(istream& in, Time& t) {
+        in >> t.hours >> t.minutes >> t.seconds;
+        if (in) t.normalize();
+        return in;
+    }
+
+    Time operator+(const Time& other) const {
+        return Time(
+            hours + other.hours,
+            minutes + other.minutes,
+            seconds + other.seconds
+        );
+    }
+
+    Time operator-(const Time& other) const {
+        int a = hours * 3600 + minutes * 60 + seconds;
+        int b = other.hours * 3600 + other.minutes * 60 + other.seconds;
+
+        int result = a - b;
+        if (result < 0) result = 0;
+
+        return Time(result / 3600, (result % 3600) / 60, result % 60);
+    }
+};
+
+int main() {
+    Time t1, t2;
+
+    cin >> t1 >> t2;
+
+    Time t3 = t1 + t2;
+    Time t4 = t1 - t2;
+
+    cout << t3 << '\n';
+    cout << t4 << '\n';
+
+    return 0;
+}
