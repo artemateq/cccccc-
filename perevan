@@ -1,0 +1,52 @@
+#include <iostream>
+
+class Fraction
+{
+private:
+    int numerator;
+    int denominator;
+
+public:
+    Fraction(int num = 0, int den = 1)
+        : numerator(num), denominator(den) {}
+
+ 
+    Fraction& operator--()
+    {
+        numerator -= denominator;
+        return *this;
+    }
+
+   
+    Fraction operator--(int)
+    {
+        Fraction temp(*this);
+        numerator -= denominator;
+        return temp;
+    }
+
+
+    Fraction operator-(const Fraction& other) const
+    {
+        return Fraction(
+            numerator * other.denominator -
+            other.numerator * denominator,
+            denominator * other.denominator
+        );
+    }
+    Fraction operator-(int value) const
+    {
+        return Fraction(
+            numerator - value * denominator,
+            denominator
+        );
+    }
+
+    friend Fraction operator-(int value, const Fraction& frac)
+    {
+        return Fraction(
+            value * frac.denominator - frac.numerator,
+            frac.denominator
+        );
+    }
+};
